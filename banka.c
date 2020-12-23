@@ -1369,30 +1369,34 @@ int main()
     {
         printf("\n11.GRUP BANKA SISTEMI\n\n1.Hesap Olustur\n2.Giris Yap\n3.Hesap Sil\n4.Cikis Yap\n");
         scanf("%d", &islem);
-        if (islem == 1)
+        switch(islem)
+        {
+        	
+		
+        case (1):
         {
             hesap_ac();
         }
-        else if (islem == 2)
+        case(2):
         {
             giris_yap();
             break;
         }
-        else if (islem == 3)
+        case (3):
         {
             kayit_sil();
         }
-        else if (islem == 4)
+        case (4):
         {
             printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
-            
-            sleep(100000);
+            getch();
 			break;
         }
-        else
+        default:
         {
             printf("Lutfen Yapmak Istediginiz Islemin Numarasini Tuslayiniz\n");
         }
+		}
     }
     return 0;
 }
