@@ -1390,7 +1390,7 @@ int main()
         {
             printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
             getch();
-			break;
+	    break;
         }
         default:
         {
