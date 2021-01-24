@@ -7,11 +7,21 @@
 
 int sifre_database[50], hesapNo_database[50], sifre, islem, sifre_giris, a = 1, ay, hesapNo, i, j, k, secim, b = 1, c = 0, x, y, fatura;
 float para_database[50], borc_database[50], dolar_database[50], euro_database[50], para;
-char musteri_database[50][50], ad[30], soyad[30], ad_giris[30], soyad_giris[30], telno[10], kayitlifaturalar[50][50], faturano[6], sigorta_database[50][50], saglik_sigorta[11], arac_sigorta[10], mahalle[20], ilce[20];
+char musteri_database[50][50], ad[100], /*soyad[30], */ ad_giris[30], soyad_giris[30], telno[10], kayitlifaturalar[50][50], faturano[6], sigorta_database[50][50], saglik_sigorta[11], arac_sigorta[10], mahalle[20], ilce[20];
 FILE *database, *fatura_eski, *sigorta_eski;
 
-int main(void);
+int main();
 void islem_menu(int i, int index);
+
+
+void bosluk_silme(char* bosluklu_string) { //Ad soyad yazarken boþluklarý siler
+    const char* bosluk_arama = bosluklu_string;
+    do {
+        while (*bosluk_arama == ' ') {
+            ++bosluk_arama;
+        }
+    } while (*bosluklu_string++ = *bosluk_arama++);
+}
 
 void database_log(int index)
 {
@@ -26,9 +36,12 @@ void database_log(int index)
 void hesap_ac()
 {
     database = fopen("database.txt", "a");
-    printf("Musterinin Ad ve Soyadini Giriniz: \n");
-    scanf("%s %s", &ad, &soyad);
-    strcat(ad, soyad);
+    printf("Musterinin Ad ve Soyadini Giriniz: ");
+//    scanf("%s %s", &ad , &soyad);
+	gets(ad); //birden fazla ismi olanlar için eklendi
+//    strcat(ad, soyad);
+ 	
+	bosluk_silme(ad); //ad-soyaddaki boþluklarý siler
     printf("Hesabiniz Icin 4-6 Haneli PIN Kodu Olusturun: \n");
     while (1)
     {
@@ -1042,7 +1055,7 @@ void islem_menu(int i, int index)
         else if (islem == 8)
         {
             printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
-            sleep(2);
+            break;
             main();
         }
         else
@@ -1064,13 +1077,19 @@ void kayit_sil()
             fscanf(database, "%s %d %f %f %f %f %d", &musteri_database[index], &sifre_database[index], &para_database[index], &borc_database[index], &dolar_database[index], &euro_database[index], &hesapNo_database[index]);
             index++;
         }
+        
+        printf("#   Ad Soyad   #  Musteri Numarasi  #\n");
+        
+        
         printf("Silmek Istediginiz Hesabin Ad Soyad Bilgisini Giriniz:\n");
-        scanf("%s%s", &ad_giris, &soyad_giris);
+        gets(ad_giris);
+        bosluk_silme(ad_giris);
+//        scanf("%s%s", &ad_giris, &soyad_giris);
         printf("Silmek Istediginiz Hesabin Sifresini Giriniz: \n");
         scanf("%d", &sifre_giris);
-        strcat(ad_giris, soyad_giris);
+//        strcat(ad_giris, soyad_giris);
         strupr(ad_giris);
-        strupr(soyad_giris);
+//        strupr(soyad_giris);
         for (i = 0; i < index - 1; i++)
         {
             if ((strcmp(ad_giris, musteri_database[i]) == 0) && sifre_giris == sifre_database[i])
@@ -1138,12 +1157,15 @@ void giris_yap()
         do
         {
             printf("Adinizi ve Soyadinizi Giriniz:\n");
-            scanf("%s%s", &ad_giris, &soyad_giris);
+//            scanf("%s%s", &ad_giris, &soyad_giris);
+			gets(ad_giris);
+			bosluk_silme(ad_giris);
+			
             printf("Sifreinizi Giriniz:\n");
             scanf("%d", &sifre_giris);
-            strcat(ad_giris, soyad_giris);
+//            strcat(ad_giris, soyad_giris);
             strupr(ad_giris);
-            strupr(soyad_giris);
+//            strupr(soyad_giris);
             for (i = 0; i < index - 1; i++)
             {
                 if ((strcmp(ad_giris, musteri_database[i]) == 0) && sifre_giris == sifre_database[i])
@@ -1367,36 +1389,35 @@ int main()
     srand(time(NULL));
     while (1)
     {
-        printf("\n11.GRUP BANKA SISTEMI\n\n1.Hesap Olustur\n2.Giris Yap\n3.Hesap Sil\n4.Cikis Yap\n");
+        printf("\n11.GRUP BANKA SISTEMI\n\n1.Hesap Olustur\n2.Giris Yap\n3.Hesap Sil\n4.Cikis Yap\n\n");
+        printf("Lutfen Yapmak Istediginiz Islemin Numarasini Tuslayiniz: ");
+
         scanf("%d", &islem);
-        switch(islem)
-        {
-        	
-		
-        case (1):
+        getchar(); //hesap_ac fonksiyonunda gets() fonksiyonunu atlýyor, getchar bunu düzeltiyor. 
+        if (islem == 1)
         {
             hesap_ac();
         }
-        case(2):
+        else if (islem == 2)
         {
             giris_yap();
             break;
         }
-        case (3):
+        else if (islem == 3)
         {
             kayit_sil();
         }
-        case (4):
+        else if (islem == 4)
         {
             printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
-            getch();
+            
+            sleep(100000);
 			break;
         }
-        default:
+        else
         {
             printf("Lutfen Yapmak Istediginiz Islemin Numarasini Tuslayiniz\n");
         }
-		}
-    }
+    } 
     return 0;
 }
