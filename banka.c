@@ -7,7 +7,7 @@
 
 int sifre_database[50], hesapNo_database[50], sifre, islem, sifre_giris, a = 1, ay, hesapNo, i, j, k, secim, b = 1, c = 0, x, y, fatura;
 float para_database[50], borc_database[50], dolar_database[50], euro_database[50], para;
-char musteri_database[50][50], ad[100], /*soyad[30], */ ad_giris[30], soyad_giris[30], telno[10], kayitlifaturalar[50][50], faturano[6], sigorta_database[50][50], saglik_sigorta[11], arac_sigorta[10], mahalle[20], ilce[20];
+char musteri_database[50][50], ad[100], /*soyad[30], */ ad_giris[100], /*soyad_giris[30],*/ telno[10], kayitlifaturalar[50][50], faturano[6], sigorta_database[50][50], saglik_sigorta[11], arac_sigorta[10], mahalle[20], ilce[20];
 FILE *database, *fatura_eski, *sigorta_eski;
 
 int main();
@@ -1078,8 +1078,8 @@ void kayit_sil()
             index++;
         }
         
-        printf("#   Ad Soyad   #  Musteri Numarasi  #\n");
-        
+//        printf("#   Ad Soyad   #  Musteri Numarasi  #\n");
+// Müşteri listesi burada gösterilecek, müşteri numarasına göre kayıt silinecek
         
         printf("Silmek Istediginiz Hesabin Ad Soyad Bilgisini Giriniz:\n");
         gets(ad_giris);
