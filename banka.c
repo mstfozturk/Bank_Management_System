@@ -5,16 +5,15 @@
 #include <time.h>
 #include <locale.h>
 
-int sifre_database[50], hesapNo_database[50], sifre, islem, sifre_giris, a = 1, ay, hesapNo, i, j, k, secim, b = 1, c = 0, x, y, fatura;
+int  sifre_database[50], hesapNo_database[50], sifre, islem, sifre_giris, a = 1, ay, hesapNo, hesapNo_giris, i, j, k, secim, b = 1, c = 0, x, y, fatura;
 float para_database[50], borc_database[50], dolar_database[50], euro_database[50], para;
-char musteri_database[50][50], ad[100], /*soyad[30], */ ad_giris[100], /*soyad_giris[30],*/ telno[10], kayitlifaturalar[50][50], faturano[6], sigorta_database[50][50], saglik_sigorta[11], arac_sigorta[10], mahalle[20], ilce[20];
+char musteri_database[50][50], ad[100],  ad_giris[100], telno[10], kayitlifaturalar[50][50], faturano[6], sigorta_database[50][50], saglik_sigorta[11], arac_sigorta[10], mahalle[20], ilce[20];
 FILE *database, *fatura_eski, *sigorta_eski;
 
 int main();
 void islem_menu(int i, int index);
 
-
-void bosluk_silme(char* bosluklu_string) { //Ad soyad yazarken boşlukları siler
+void bosluk_silme(char* bosluklu_string) { 
     const char* bosluk_arama = bosluklu_string;
     do {
         while (*bosluk_arama == ' ') {
@@ -37,11 +36,9 @@ void hesap_ac()
 {
     database = fopen("database.txt", "a");
     printf("Musterinin Ad ve Soyadini Giriniz: ");
-//    scanf("%s %s", &ad , &soyad);
-	gets(ad); //birden fazla ismi olanlar için eklendi
-//    strcat(ad, soyad);
+	gets(ad); 
  	
-	bosluk_silme(ad); //ad-soyaddaki boşlukları siler
+	bosluk_silme(ad); 
     printf("Hesabiniz Icin 4-6 Haneli PIN Kodu Olusturun: \n");
     while (1)
     {
@@ -59,8 +56,9 @@ void hesap_ac()
     strupr(ad);
     fprintf(database, "%s %d 0.0 0.0 0.0 0.0 %d\n", ad, sifre, hesapNo);
     fclose(database);
-    printf("Hesabiniz Basari Ile Olusturulmustur\n\n");
-    sleep(1);
+    printf("%d Nolu hesabiniz Basari Ile Olusturulmustur. Giris yapmak icin hesap numaranizi kullanabilirsiniz.\n\n", hesapNo);
+    printf("Hesap Numaranizi Not Etmeyi Unutmayiniz. \nDevam etmek icin bir tusa basiniz!");
+    getch();
     system("cls");
 }
 
@@ -316,7 +314,7 @@ void para_gonder(int i, int index)
 
 void doviz_sat(int i, int index)
 {
-    printf("\n1.Dolar: 7.63\n2.Euro: 9.35\n9.Ust Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz: \n");
+    printf("\n1.Dolar: 7.40\n2.Euro: 9.00\n9.Ust Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz: \n");
     scanf("%d", &islem);
     if (islem != 1 && islem != 2 && islem != 9)
     {
@@ -356,7 +354,7 @@ void doviz_sat(int i, int index)
                 else
                 {
                     dolar_database[i] -= para;
-                    para_database[i] += (para * 7.63);
+                    para_database[i] += (para * 7.40);
                     break;
                 }
             }
@@ -383,7 +381,7 @@ void doviz_sat(int i, int index)
                 else
                 {
                     euro_database[i] -= para;
-                    para_database[i] += (para * 7.63);
+                    para_database[i] += (para * 7.40);
                     break;
                 }
             }
@@ -406,13 +404,13 @@ void doviz_al(int i, int index)
             while (1)
             {
                 scanf("%f", &para);
-                if (para_database[i] < (para * (7.63)))
+                if (para_database[i] < (para * (7.40)))
                 {
                     printf("Hesabinizda Yeterli Bakiye Bulunmamaktadir\n");
                 }
                 else
                 {
-                    para_database[i] -= para * (7.63);
+                    para_database[i] -= para * (7.40);
                     dolar_database[i] += para;
                     database_log(index);
                     printf("Doviz Isleminiz Basariyla Gerceklestirilmistir");
@@ -427,13 +425,13 @@ void doviz_al(int i, int index)
             while (1)
             {
                 scanf("%f", &para);
-                if (para_database[i] < (para * (9.35)))
+                if (para_database[i] < (para * (9.00)))
                 {
                     printf("Hesabinizda Yeterli Bakiye Bulunmamaktadir.\n");
                 }
                 else
                 {
-                    para_database[i] -= para * (9.35);
+                    para_database[i] -= para * (9.00);
                     euro_database[i] += para;
                     database_log(index);
                     printf("Doviz Isleminiz Basariyla Gerceklestirilmistir");
@@ -894,7 +892,7 @@ void islem_menu(int i, int index)
     system("cls");
     while (1)
     {
-        printf("Mevcut Bakiyeniz: \nTurk Lirasi: %.1f\nDolar: %.1f\nEuro: %.1f\n", para_database[i], dolar_database[i], euro_database[i]);
+        printf("Mevcut Bakiyeniz: \nTurk Lirasi: %.1f TL\nDolar: %.1f\nEuro: %.1f\n", para_database[i], dolar_database[i], euro_database[i]);
         printf("Guncel Borcunuz: %.1fTL\n", borc_database[i]);
         printf("\n1.Para Yatirma/Para Cekme\n2.Para Gonderme\n3.Kredi Cekme\n4.Borc Odeme\n5.Doviz Islemleri\n6.Fatura Odeme\n7.Sigorta Islemleri\n8.Cikis\nLutfen Yapmak Istediginiz Islem Numarasini Tuslayiniz: \n");
         scanf("%d", &islem);
@@ -998,7 +996,7 @@ void islem_menu(int i, int index)
                 scanf("%d", &secim);
                 if (secim == 1)
                 {
-                    printf("\n1.Dolar: 7.63\n2.Euro: 9.35\n9.Ana Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz:\n");
+                    printf("\n1.Dolar: 7.40\n2.Euro: 9.00\n9.Ana Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz:\n");
                     doviz_al(i, index);
                 }
                 else if (secim == 2)
@@ -1015,7 +1013,7 @@ void islem_menu(int i, int index)
                             {
                                 printf("Doviz Satin Alma Ekranina Yonlendiriliyorsunuz...\n");
                                 sleep(1);
-                                printf("\n1.Dolar: 7.63\n2.Euro: 9.35\n9.Ust Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz: \n");
+                                printf("\n1.Dolar: 7.40\n2.Euro: 9.00\n9.Ust Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz: \n");
                                 doviz_al(i, index);
                             }
                             else if (x == 2)
@@ -1054,7 +1052,7 @@ void islem_menu(int i, int index)
         }
         else if (islem == 8)
         {
-            printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
+            printf("CPD BANKA TESEKKUR EDER\n...IYI GUNLER...\n");
             break;
             main();
         }
@@ -1078,21 +1076,14 @@ void kayit_sil()
             index++;
         }
         
-//        printf("#   Ad Soyad   #  Musteri Numarasi  #\n");
-// Müşteri listesi burada gösterilecek, müşteri numarasına göre kayıt silinecek
-        
-        printf("Silmek Istediginiz Hesabin Ad Soyad Bilgisini Giriniz:\n");
-        gets(ad_giris);
-        bosluk_silme(ad_giris);
-//        scanf("%s%s", &ad_giris, &soyad_giris);
+    
+		printf("Silmek Istediginiz Hesabin Hesap Numarasini Giriniz:\n");
+        scanf("%d", &hesapNo_giris);
         printf("Silmek Istediginiz Hesabin Sifresini Giriniz: \n");
         scanf("%d", &sifre_giris);
-//        strcat(ad_giris, soyad_giris);
-        strupr(ad_giris);
-//        strupr(soyad_giris);
         for (i = 0; i < index - 1; i++)
         {
-            if ((strcmp(ad_giris, musteri_database[i]) == 0) && sifre_giris == sifre_database[i])
+            if ((hesapNo_giris == hesapNo_database[i]) && (sifre_giris == sifre_database[i]))
             {
                 k = strlen(musteri_database[i]);
                 for (j = 0; j < k; j++)
@@ -1156,19 +1147,14 @@ void giris_yap()
         }
         do
         {
-            printf("Adinizi ve Soyadinizi Giriniz:\n");
-//            scanf("%s%s", &ad_giris, &soyad_giris);
-			gets(ad_giris);
-			bosluk_silme(ad_giris);
+            printf("Hesap Numaranizi Giriniz:\n");
+            scanf("%d", &hesapNo_giris);
 			
-            printf("Sifreinizi Giriniz:\n");
+            printf("Sifrenizi Giriniz:\n");
             scanf("%d", &sifre_giris);
-//            strcat(ad_giris, soyad_giris);
-            strupr(ad_giris);
-//            strupr(soyad_giris);
             for (i = 0; i < index - 1; i++)
             {
-                if ((strcmp(ad_giris, musteri_database[i]) == 0) && sifre_giris == sifre_database[i])
+                if ((hesapNo_giris == hesapNo_database[i]) && (sifre_giris == sifre_database[i]))
                 {
                     printf("GIRIS ONAYLANDI");
                     sleep(1);
@@ -1280,7 +1266,7 @@ void giris_yap()
                                 scanf("%d", &secim);
                                 if (secim == 1)
                                 {
-                                    printf("\n1.Dolar: 7.63\n2.Euro: 9.35\n9.Ana Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz:\n");
+                                    printf("\n1.Dolar: 7.40\n2.Euro: 9.00\n9.Ana Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz:\n");
                                     doviz_al(i, index);
                                 }
                                 else if (secim == 2)
@@ -1297,7 +1283,7 @@ void giris_yap()
                                             {
                                                 printf("Doviz Satin Alma Ekranina Yonlendiriliyorsunuz...\n");
                                                 sleep(1);
-                                                printf("\n1.Dolar: 7.63\n2.Euro: 9.35\n9.Ust Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz: \n");
+                                                printf("\n1.Dolar: 7.40\n2.Euro: 9.00\n9.Ust Menu\nIslem Yapmak Istediginiz Para Birimini Seciniz: \n");
                                                 doviz_al(i, index);
                                             }
                                             else if (x == 2)
@@ -1336,7 +1322,7 @@ void giris_yap()
                         }
                         else if (islem == 8)
                         {
-                            printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
+                            printf("CPD BANKA TESEKKUR EDER\n...IYI GUNLER...\n");
                             sleep(1);
                             printf("Ana Menuye Donuluyor...\n\n");
                             sleep(1);
@@ -1389,11 +1375,11 @@ int main()
     srand(time(NULL));
     while (1)
     {
-        printf("\n11.GRUP BANKA SISTEMI\n\n1.Hesap Olustur\n2.Giris Yap\n3.Hesap Sil\n4.Cikis Yap\n\n");
+        printf("\nCPD BANKA SISTEMI\n\n1.Hesap Olustur\n2.Giris Yap\n3.Hesap Sil\n4.Cikis Yap\n\n");
         printf("Lutfen Yapmak Istediginiz Islemin Numarasini Tuslayiniz: ");
 
         scanf("%d", &islem);
-        getchar(); //hesap_ac fonksiyonunda gets() fonksiyonunu atlıyor, getchar bunu düzeltiyor. 
+        getchar();
         if (islem == 1)
         {
             hesap_ac();
@@ -1409,7 +1395,7 @@ int main()
         }
         else if (islem == 4)
         {
-            printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
+            printf("CPD BANKA TESEKKUR EDER\n...IYI GUNLER...\n");
             
             getch();
 			break;
