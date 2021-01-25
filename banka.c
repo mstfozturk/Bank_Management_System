@@ -14,7 +14,7 @@ int main();
 void islem_menu(int i, int index);
 
 
-void bosluk_silme(char* bosluklu_string) { //Ad soyad yazarken boþluklarý siler
+void bosluk_silme(char* bosluklu_string) { //Ad soyad yazarken boÅŸluklarÄ± siler
     const char* bosluk_arama = bosluklu_string;
     do {
         while (*bosluk_arama == ' ') {
@@ -38,10 +38,10 @@ void hesap_ac()
     database = fopen("database.txt", "a");
     printf("Musterinin Ad ve Soyadini Giriniz: ");
 //    scanf("%s %s", &ad , &soyad);
-	gets(ad); //birden fazla ismi olanlar için eklendi
+	gets(ad); //birden fazla ismi olanlar iÃ§in eklendi
 //    strcat(ad, soyad);
  	
-	bosluk_silme(ad); //ad-soyaddaki boþluklarý siler
+	bosluk_silme(ad); //ad-soyaddaki boÅŸluklarÄ± siler
     printf("Hesabiniz Icin 4-6 Haneli PIN Kodu Olusturun: \n");
     while (1)
     {
@@ -1079,7 +1079,7 @@ void kayit_sil()
         }
         
 //        printf("#   Ad Soyad   #  Musteri Numarasi  #\n");
-// Müþteri listesi burada gösterilecek, müþteri numarasýna göre kayýt silinecek
+// MÃ¼ÅŸteri listesi burada gÃ¶sterilecek, mÃ¼ÅŸteri numarasÄ±na gÃ¶re kayÄ±t silinecek
         
         printf("Silmek Istediginiz Hesabin Ad Soyad Bilgisini Giriniz:\n");
         gets(ad_giris);
@@ -1393,7 +1393,7 @@ int main()
         printf("Lutfen Yapmak Istediginiz Islemin Numarasini Tuslayiniz: ");
 
         scanf("%d", &islem);
-        getchar(); //hesap_ac fonksiyonunda gets() fonksiyonunu atlýyor, getchar bunu düzeltiyor. 
+        getchar(); //hesap_ac fonksiyonunda gets() fonksiyonunu atlÄ±yor, getchar bunu dÃ¼zeltiyor. 
         if (islem == 1)
         {
             hesap_ac();
@@ -1411,7 +1411,7 @@ int main()
         {
             printf("11. GRUP TESEKKUR EDER\n...IYI GUNLER...\n");
             
-            sleep(100000);
+            getch();
 			break;
         }
         else
