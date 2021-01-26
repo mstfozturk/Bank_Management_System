@@ -22,6 +22,12 @@ void bosluk_silme(char* bosluklu_string) {
     } while (*bosluklu_string++ = *bosluk_arama++);
 }
 
+void delay(unsigned int mseconds)
+{
+    clock_t goal = mseconds + clock();
+    while (goal > clock());
+}
+
 void database_log(int index)
 {
     database = fopen("database.txt", "w");
@@ -886,7 +892,15 @@ void sigorta_islem(int i, int index)
 
 void islem_menu(int i, int index)
 {
-    printf("\nAna Menuye Donuluyor...\n\n");
+	int l;
+    printf("\nAna Menu Yukleniyor\n");
+	printf("_________________________\n");
+
+        for(l=0;l<=24;l++)
+        {
+			delay(60);
+            printf("\xB2");
+        }
     sleep(1);
     database_log(index);
     system("cls");
@@ -1161,7 +1175,8 @@ void giris_yap()
                     system("cls");
                     printf("HOSGELDINIZ\n\n");
                     a = 0;
-                    while (1)
+                    islem_menu(i, index);
+           /*         while (1)
                     {
                         printf("Mevcut Bakiyeniz: \nTurk Lirasi: %.1f\nDolar: %.1f\nEuro: %.1f\n", para_database[i], dolar_database[i], euro_database[i]);
         				printf("Guncel Borcunuz: %.1fTL\n", borc_database[i]);
@@ -1332,7 +1347,7 @@ void giris_yap()
                         {
                             printf("Lutfen Yapmak Istediginiz Islemin Numarasini Tuslayiniz\n\n");
                         }
-                    }
+                    } */
                 }
             }
 
